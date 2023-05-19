@@ -114,7 +114,7 @@ function Gig() {
           <div className="right">
             <div className="price">
               <h3>{data.shortTitle}</h3>
-              <h2>{data.price}</h2>
+              <h2>${data.price}</h2>
             </div>
             <p>
               I will create a unique high quality AI generated image based on a
