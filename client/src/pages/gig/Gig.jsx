@@ -2,6 +2,7 @@ import React from "react";
 import "./Gig.scss";
 import { Slider } from "infinite-react-carousel/lib";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
@@ -16,7 +17,27 @@ function Gig() {
         return res.data;
       }),
   });
-
+  const navigate = useNavigate();
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const handleContactMeClick = async (gig) => {
+    console.log(gig);
+    const sellerId = gig.userId;
+    const buyerId = currentUser._id;
+    const id = sellerId + buyerId + gig._id;
+    console.log(id);
+    try {
+      const res = await newRequest.get(`/conversations/single/${id}`);
+      navigate(`/message/${res.data.id}`);
+    } catch (err) {
+      if (err.response.status === 404) {
+        const res = await newRequest.post(`/conversations/`, {
+          to: currentUser.seller ? buyerId : sellerId,
+          gigId: gig._id,
+        });
+        navigate(`/message/${res.data.id}`);
+      }
+    }
+  };
   const userId = data?.userId;
 
   const {
@@ -99,7 +120,9 @@ function Gig() {
                         </span>
                       </div>
                     )}
-                    <button>Contact Me</button>
+                    <button onClick={() => handleContactMeClick(data)}>
+                      Contact Me
+                    </button>
                   </div>
                 </div>
                 <div className="box">

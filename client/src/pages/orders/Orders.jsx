@@ -26,7 +26,7 @@ const Orders = () => {
     } catch (err) {
       if (err.response.status === 404) {
         const res = await newRequest.post(`/conversations/`, {
-          to: currentUser.seller ? buyerId : sellerId,
+          to: currentUser.isSeller ? buyerId : sellerId,
           gigId: order.gigId,
         });
         navigate(`/message/${res.data.id}`);

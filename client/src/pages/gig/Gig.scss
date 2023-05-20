@@ -118,10 +118,15 @@
             }
 
             button {
-              background-color: white;
+              background-color: #1dbf73;
               border-radius: 5px;
               border: 1px solid gray;
               padding: 10px;
+              color: white;
+              font-weight: 500;
+              border: none;
+              font-size: 15px;
+              cursor: pointer;
             }
           }
         }
@@ -287,11 +292,13 @@
 
       button {
         background-color: #1dbf73;
+        border-radius: 5px;
+        border: 1px solid gray;
         padding: 10px;
         color: white;
         font-weight: 500;
         border: none;
-        font-size: 18px;
+        font-size: 15px;
         cursor: pointer;
       }
     }
