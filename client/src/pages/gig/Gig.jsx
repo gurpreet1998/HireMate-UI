@@ -4,7 +4,6 @@ import { Slider } from "infinite-react-carousel";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
-import Review from "../../components/review/Review";
 import Reviews from "../../components/reviews/Reviews";
 function Gig() {
   const { id } = useParams();

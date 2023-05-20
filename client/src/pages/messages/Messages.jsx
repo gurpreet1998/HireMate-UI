@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import "./Messages.scss";
@@ -17,6 +17,7 @@ const Messages = () => {
         return res.data;
       }),
   });
+  console.log(data);
 
   const mutation = useMutation({
     mutationFn: (id) => {
@@ -26,6 +27,28 @@ const Messages = () => {
       queryClient.invalidateQueries(["conversations"]);
     },
   });
+
+  const [userNames, setUserNames] = useState({});
+
+  useEffect(() => {
+    const fetchUserNames = async () => {
+      const userIds = data.map((c) =>
+        currentUser.isSeller ? c.buyerId : c.sellerId
+      );
+      const users = await Promise.all(
+        userIds.map((id) => newRequest.get(`/users/${id}`))
+      );
+      const names = {};
+      users.forEach((user) => {
+        names[user.data._id] = user.data.username;
+      });
+      setUserNames(names);
+    };
+
+    if (data) {
+      fetchUserNames();
+    }
+  }, [data, currentUser.isSeller]);
 
   const handleRead = (id) => {
     mutation.mutate(id);
@@ -58,7 +81,9 @@ const Messages = () => {
                 }
                 key={c.id}
               >
-                <td>{currentUser.isSeller ? c.buyerId : c.sellerId}</td>
+                <td>
+                  {userNames[currentUser.isSeller ? c.buyerId : c.sellerId]}
+                </td>
                 <td>
                   <Link to={`/message/${c.id}`} className="link">
                     {c?.lastMessage?.substring(0, 100)}...
