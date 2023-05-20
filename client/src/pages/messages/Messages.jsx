@@ -17,7 +17,6 @@ const Messages = () => {
         return res.data;
       }),
   });
-  console.log(data);
 
   const mutation = useMutation({
     mutationFn: (id) => {
@@ -85,9 +84,23 @@ const Messages = () => {
                   {userNames[currentUser.isSeller ? c.buyerId : c.sellerId]}
                 </td>
                 <td>
-                  <Link to={`/message/${c.id}`} className="link">
+                  <Link
+                    to={{
+                      pathname: `/message/${c.id}`,
+                      state: {
+                        params:
+                          userNames[
+                            currentUser.isSeller ? c.buyerId : c.sellerId
+                          ],
+                      },
+                    }}
+                    className="link"
+                  >
                     {c?.lastMessage?.substring(0, 100)}...
                   </Link>
+                  {/* <Link to={`/message/${c.id}`} className="link">
+                    {c?.lastMessage?.substring(0, 100)}...
+                  </Link> */}
                 </td>
                 <td>{moment(c.updatedAt).fromNow()}</td>
                 <td>

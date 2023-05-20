@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import Reviews from "../../components/reviews/Reviews";
+import { Link } from "react-router-dom";
+
 function Gig() {
   const { id } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -137,7 +139,9 @@ function Gig() {
                 </div>
               ))}
             </div>
-            <button>Continue</button>
+            {/* <Link to={`/gig/${item._id}`} className="link">
+              <button>Continue</button>
+            </Link> */}
           </div>
         </div>
       )}
