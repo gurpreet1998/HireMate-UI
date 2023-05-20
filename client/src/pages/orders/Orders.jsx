@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Orders.scss";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";

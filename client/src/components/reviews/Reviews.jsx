@@ -5,7 +5,6 @@ import Review from "../review/Review";
 import "./Reviews.scss";
 const Reviews = ({ gigId }) => {
   const queryClient = useQueryClient();
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["reviews"],
