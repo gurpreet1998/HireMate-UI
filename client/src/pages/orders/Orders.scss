@@ -30,8 +30,7 @@
           text-align: left;
         }
         td {
-          
-          sup{
+          sup {
             font-size: 12px;
           }
 
@@ -39,6 +38,7 @@
             width: 50px;
             height: 25px;
             object-fit: cover;
+            cursor: pointer;
           }
 
           .message {

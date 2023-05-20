@@ -59,6 +59,10 @@ const Orders = () => {
     }
   };
 
+  const handleImageClick = (orderId) => {
+    navigate(`/gig/${orderId}`);
+  };
+
   return (
     <div className="orders">
       {isLoading ? (
@@ -84,7 +88,12 @@ const Orders = () => {
               {data.map((order) => (
                 <tr key={order._id}>
                   <td>
-                    <img className="image" src={order.img} alt="" />
+                    <img
+                      className="image"
+                      src={order.img}
+                      alt=""
+                      onClick={() => handleImageClick(order.gigId)}
+                    />
                   </td>
                   <td>{order.title}</td>
                   {currentUser.isSeller ? (
