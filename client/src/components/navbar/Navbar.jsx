@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import "./Navbar.scss";
+import { toast, ToastContainer } from "react-toastify";
 
 function Navbar() {
   const [active, setActive] = useState(false);
@@ -28,7 +29,8 @@ function Navbar() {
     try {
       await newRequest.post("/auth/logout");
       localStorage.setItem("currentUser", null);
-      navigate("/");
+      toast.success("User Registerd Successfully");
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }

@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import "./Login.scss";
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../../app.scss";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isShaking, setIsShaking] = useState(false);
+  const [isToastVisible, setIsToastVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -16,6 +20,8 @@ function Login() {
     try {
       const res = await newRequest.post("/auth/login", { username, password });
       localStorage.setItem("currentUser", JSON.stringify(res.data));
+      setIsToastVisible(true);
+      toast.success("User LoggedIn Successfully !!");
       navigate("/");
     } catch (err) {
       setError(err.response.data);
