@@ -6,15 +6,21 @@ import Slide from "../../components/slide/Slide";
 import CatCard from "../../components/catCard/CatCard";
 import ProjectCard from "../../components/projectCard/ProjectCard";
 import { cards, projects } from "../../data";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category) => {
+    navigate(`/gigs/?cat=${category}`);
+  };
   return (
     <div className="home">
       <Featured />
       <TrustedBy />
       <Slide slidesToShow={5} arrowsScroll={5}>
         {cards.map((card) => (
-          <CatCard key={card.id} card={card} />
+          <CatCard key={card.id} card={card} onClick={handleCategoryClick} />
         ))}
       </Slide>
       <div className="features">
@@ -151,7 +157,7 @@ function Home() {
         <div className="container">
           <div className="item">
             <h1>
-              fiverr <i>business</i>
+              Hiremate <i>business</i>
             </h1>
             <h1>
               A business solution designed for <i>teams</i>

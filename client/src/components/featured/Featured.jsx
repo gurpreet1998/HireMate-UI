@@ -7,7 +7,7 @@ function Featured() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    navigate(`/gigs?search=${input}`);
+    navigate(`/gigs?search=${input}`); //it will search
   };
   return (
     <div className="featured">
