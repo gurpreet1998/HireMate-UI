@@ -3,4 +3,26 @@
     text-decoration: none;
     color: inherit;
   }
+  /* app.scss */
+
+  /* Increase the size of the toast container */
+  .ToastContainer {
+    .Toastify__toast-container {
+      /* Set the desired width and height */
+      width: 400px;
+      height: 100px;
+    }
+
+    /* Increase the size of the toast body */
+    .Toastify__toast {
+      /* Set the desired width and height */
+      width: 400px;
+      height: 100px;
+
+      /* Customize other styles as needed */
+      /* For example, you can modify the font size, padding, etc. */
+      font-size: 16px;
+      padding: 16px;
+    }
+  }
 }
