@@ -1,9 +1,37 @@
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 .login {
   display: flex;
   align-items: center;
   justify-content: center;
 
   form {
+    .error {
+      border: px solid red;
+    }
+
+    .error-message {
+      color: red;
+    }
+    .shake {
+      animation: shake 0.5s;
+    }
+
     width: 360px;
     padding: 100px 0px;
     display: flex;
@@ -32,11 +60,11 @@
       color: white;
       font-weight: 500;
       font-size: 18px;
-      background-color: #1dbf73;
+      background-color: #2cafc1;
       cursor: pointer;
     }
 
-    span{
+    span {
       color: red;
       font-size: 12px;
     }

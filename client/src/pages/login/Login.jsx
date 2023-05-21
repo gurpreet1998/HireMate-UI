@@ -7,6 +7,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isShaking, setIsShaking] = useState(false);
 
   const navigate = useNavigate();
 
@@ -15,9 +16,13 @@ function Login() {
     try {
       const res = await newRequest.post("/auth/login", { username, password });
       localStorage.setItem("currentUser", JSON.stringify(res.data));
-      navigate("/")
+      navigate("/");
     } catch (err) {
       setError(err.response.data);
+      setIsShaking(true);
+      setTimeout(() => {
+        setIsShaking(false);
+      }, 1000);
     }
   };
 
@@ -27,20 +32,25 @@ function Login() {
         <h1>Sign in</h1>
         <label htmlFor="">Username</label>
         <input
+          className={error !== null ? "error" : ""}
           name="username"
           type="text"
-          placeholder="johndoe"
+          placeholder="exampleUser123"
           onChange={(e) => setUsername(e.target.value)}
         />
 
         <label htmlFor="">Password</label>
         <input
+          className={error !== null ? "error" : ""}
           name="password"
           type="password"
+          placeholder="********"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
-        {error && error}
+        <button className={isShaking ? "shake" : ""} type="submit">
+          Login
+        </button>
+        {error && <div className="error-message">{error}</div>}
       </form>
     </div>
   );
