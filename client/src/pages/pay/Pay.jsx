@@ -38,7 +38,7 @@ const Pay = () => {
   };
 
   return (
-    <div>
+    <div className="payStyle">
       <h1 className="pay">
         Payment<span className="dot">.</span>
       </h1>
