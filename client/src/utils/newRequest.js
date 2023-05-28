@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const newRequest = axios.create({
-  baseURL: "http://localhost:8080/api/",
+  baseURL: "http://20.127.253.108/api/",
   withCredentials: true,
 });
 

@@ -8,6 +8,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json yarn.lock ./
 # Install the project dependencies
 RUN yarn install --force
+RUN yarn install
 # Install additional dependencies
 RUN yarn global add react-scripts@5.0.1 -g --silent
 RUN yarn global add vite
@@ -17,4 +18,4 @@ COPY . .
 # Expose the port your application listens on (replace <port> with the actual port number)
 EXPOSE 5173
 # Specify the command to run your application
-CMD ["yarn", "run", "dev"]
+CMD ["yarn", "run", "dev", "--", "--host" ]
