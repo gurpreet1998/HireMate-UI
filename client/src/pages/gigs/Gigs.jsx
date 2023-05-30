@@ -25,7 +25,7 @@ function Gigs() {
         }),
   });
 
-  console.log(data);
+  console.log("data", data);
 
   const reSort = (type) => {
     setSort(type);
@@ -43,10 +43,11 @@ function Gigs() {
   return (
     <div className="gigs">
       <div className="container">
-        <span className="breadcrumbs">Liverr > Graphics & Design ></span>
+        <span className="breadcrumbs">Hiremate Products</span>
         <h1>AI Artists</h1>
         <p>
-          Explore the boundaries of art and technology with Liverr's AI artists
+          Explore the boundaries of art and technology with Hiremate's AI
+          artists
         </p>
         <div className="menu">
           <div className="left">

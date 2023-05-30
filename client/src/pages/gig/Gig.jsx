@@ -12,13 +12,11 @@ function Gig() {
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
-    queryFn: () =>
-      newRequest.get(`/gigs/single/${id}`).then((res) => {
+    queryFn: async () =>
+      await newRequest.get(`/gigs/single/${id}`).then((res) => {
         return res.data;
       }),
   });
-
-  //Check if the currentUser ID exists as the buyerId for the specific gigId in the order table
   const { data: dataUserData } = useQuery({
     queryKey: ["checkOrder"],
     queryFn: async () =>
@@ -28,28 +26,6 @@ function Gig() {
         return orders.some((order) => order.buyerId === currentUser._id);
       }),
   });
-
-  // const { isLoadingUserData, errorUserData, dataUserData } = useQuery({
-  //   queryKey: ["checkOrder", data._id, currentUser._id],
-  //   queryFn: () =>
-  //     newRequest
-  //       .get(`/orders/checkOrder/${data._id}/${currentUser._id}`)
-  //       .then((res) => res.data),
-  // });
-  // const { dataUserData } = useQuery({
-  //   queryKey: ["checkOrder", data._id, currentUser._id],
-  //   queryFn: async () => {
-  //     try {
-  //       const res = await newRequest.get(
-  //         `/orders/checkOrder/${data._id}/${currentUser._id}`
-  //       );
-  //       return res.data;
-  //     } catch (error) {
-  //       throw new Error(error.response.data.message);
-  //     }
-  //   },
-  // });
-
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const handleContactMeClick = async (gig) => {
@@ -94,7 +70,7 @@ function Gig() {
         <div className="container">
           <div className="left">
             <span className="breadcrumbs">
-              Hiremate {">"} Graphics & Design {">"}
+              Hiremate {">"} {data.cat} {">"}
             </span>
             <h1>{data.title}</h1>
             {isLoadingUser ? (
@@ -189,8 +165,8 @@ function Gig() {
               hasBought={dataUserData}
               isSeller={currentUser.isSeller}
             />
+            {/* <Reviews /> */}
           </div>
-
           <div className="right">
             <div className="price">
               <h3>{data.shortTitle}</h3>
@@ -215,7 +191,6 @@ function Gig() {
                 </div>
               ))}
             </div>
-
             {currentUser.isSeller ? (
               ""
             ) : (
