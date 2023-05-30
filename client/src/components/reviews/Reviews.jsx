@@ -3,7 +3,7 @@ import React from "react";
 import newRequest from "../../utils/newRequest";
 import Review from "../review/Review";
 import "./Reviews.scss";
-const Reviews = ({ gigId }) => {
+const Reviews = ({ gigId, hasBought, isSeller }) => {
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
@@ -43,7 +43,7 @@ const Reviews = ({ gigId }) => {
         : data.map((review) => <Review key={review._id} review={review} />)}
       {}
 
-      {userExist ? (
+      {hasBought == true && isSeller === false ? (
         <div className="add">
           <h3>Add a review</h3>
           <form action="" className="addForm" onSubmit={handleSubmit}>

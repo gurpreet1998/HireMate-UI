@@ -17,14 +17,45 @@ function Gig() {
         return res.data;
       }),
   });
+
+  //Check if the currentUser ID exists as the buyerId for the specific gigId in the order table
+  const { data: dataUserData } = useQuery({
+    queryKey: ["checkOrder"],
+    queryFn: async () =>
+      await newRequest.get(`/orders?gigId=${data._id}`).then((res) => {
+        const orders = res.data;
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        return orders.some((order) => order.buyerId === currentUser._id);
+      }),
+  });
+
+  // const { isLoadingUserData, errorUserData, dataUserData } = useQuery({
+  //   queryKey: ["checkOrder", data._id, currentUser._id],
+  //   queryFn: () =>
+  //     newRequest
+  //       .get(`/orders/checkOrder/${data._id}/${currentUser._id}`)
+  //       .then((res) => res.data),
+  // });
+  // const { dataUserData } = useQuery({
+  //   queryKey: ["checkOrder", data._id, currentUser._id],
+  //   queryFn: async () => {
+  //     try {
+  //       const res = await newRequest.get(
+  //         `/orders/checkOrder/${data._id}/${currentUser._id}`
+  //       );
+  //       return res.data;
+  //     } catch (error) {
+  //       throw new Error(error.response.data.message);
+  //     }
+  //   },
+  // });
+
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const handleContactMeClick = async (gig) => {
-    console.log(gig);
     const sellerId = gig.userId;
     const buyerId = currentUser._id;
     const id = sellerId + buyerId + gig._id;
-    console.log(id);
     try {
       const res = await newRequest.get(`/conversations/single/${id}`);
       navigate(`/message/${res.data.id}`);
@@ -153,8 +184,14 @@ function Gig() {
                 </div>
               </div>
             )}
-            <Reviews gigId={id} />
+            {console.log("dataUserData", dataUserData)}
+            <Reviews
+              gigId={id}
+              hasBought={dataUserData}
+              isSeller={currentUser.isSeller}
+            />
           </div>
+
           <div className="right">
             <div className="price">
               <h3>{data.shortTitle}</h3>
