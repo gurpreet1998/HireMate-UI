@@ -53,8 +53,8 @@ function Gig() {
     data: dataUser,
   } = useQuery({
     queryKey: ["user"],
-    queryFn: () =>
-      newRequest.get(`/users/${userId}`).then((res) => {
+    queryFn: async () =>
+      await newRequest.get(`/users/${userId}`).then((res) => {
         return res.data;
       }),
     enabled: !!userId,
@@ -97,11 +97,12 @@ function Gig() {
                 )}
               </div>
             )}
-            <Slider slidesToShow={1} arrowsScroll={1} className="slider">
+            {/* <Slider slidesToShow={1} arrowsScroll={1} className="slider">
               {data.images.map((img) => (
                 <img key={img} src={img} alt="" />
               ))}
-            </Slider>
+            </Slider> */}
+            <img src={data.images[0]} alt="" />
             <h2>About This Gig</h2>
             <p>{data.desc}</p>
             {isLoadingUser ? (
