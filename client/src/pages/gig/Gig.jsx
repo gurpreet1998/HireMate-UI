@@ -94,7 +94,7 @@ function Gig() {
         <div className="container">
           <div className="left">
             <span className="breadcrumbs">
-              Fiverr {">"} Graphics & Design {">"}
+              Hiremate {">"} Graphics & Design {">"}
             </span>
             <h1>{data.title}</h1>
             {isLoadingUser ? (
@@ -184,7 +184,6 @@ function Gig() {
                 </div>
               </div>
             )}
-            {console.log("dataUserData", dataUserData)}
             <Reviews
               gigId={id}
               hasBought={dataUserData}
@@ -216,9 +215,25 @@ function Gig() {
                 </div>
               ))}
             </div>
-            <Link to={`/pay/${id}`}>
-              <button>Continue</button>
-            </Link>
+
+            {currentUser.isSeller ? (
+              ""
+            ) : (
+              <>
+                {!dataUserData ? (
+                  <Link to={`/pay/${id}`}>
+                    <button>Purchase this Gig</button>
+                  </Link>
+                ) : (
+                  <button
+                    style={{ backgroundColor: "grey", cursor: "not-allowed" }}
+                    disabled
+                  >
+                    Already bought this gig
+                  </button>
+                )}
+              </>
+            )}
           </div>
         </div>
       )}
