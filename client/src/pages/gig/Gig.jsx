@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Gig.scss";
 import { Slider } from "infinite-react-carousel/lib";
 import { Link, useParams } from "react-router-dom";
@@ -9,14 +9,36 @@ import Reviews from "../../components/reviews/Reviews";
 
 function Gig() {
   const { id } = useParams();
+  const [hasBought, setHasBought] = useState(false);
+  const isSeller = JSON.parse(localStorage.getItem("currentUser")).isSeller;
+  const fetchHasBoughtStatus = async () => {
+    try {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      const res = await newRequest.get(
+        `/orders/getFilteredOrders?gigId=${id}&buyerId=${currentUser._id}`
+      );
+      const orders = res.data;
+      return orders.length > 0;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    fetchHasBoughtStatus().then((userHasBought) => {
+      setHasBought(userHasBought);
+    });
+  }, []);
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
-    queryFn: () =>
-      newRequest.get(`/gigs/single/${id}`).then((res) => {
+    queryFn: async () =>
+      await newRequest.get(`/gigs/single/${id}`).then((res) => {
         return res.data;
       }),
   });
+
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const handleContactMeClick = async (gig) => {
@@ -38,6 +60,7 @@ function Gig() {
       }
     }
   };
+
   const userId = data?.userId;
 
   const {
@@ -153,7 +176,7 @@ function Gig() {
                 </div>
               </div>
             )}
-            <Reviews gigId={id} />
+            {!isSeller && <Reviews gigId={id} buy={hasBought} />}
           </div>
           <div className="right">
             <div className="price">
@@ -179,9 +202,11 @@ function Gig() {
                 </div>
               ))}
             </div>
-            <Link to={`/pay/${id}`}>
-              <button>Continue</button>
-            </Link>
+            {!isSeller && (
+              <Link to={`/pay/${id}`}>
+                <button>Continue</button>
+              </Link>
+            )}
           </div>
         </div>
       )}
